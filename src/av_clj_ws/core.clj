@@ -6,6 +6,7 @@
             [cheshire.core :as json]
             [compojure.core :refer [defroutes GET POST ANY]]
             [compojure.route :as route]
+;;            [av-clj-ws.clerk-runner :as clerk-runner]
             ))
 
 (defn handle-root [request]
@@ -38,6 +39,18 @@
   (-> (wrap-defaults app-routes site-defaults)
       (wrap-params)))
 
-(defn -main [& args]
-  (jetty/run-jetty app {:port 8080 :join? false}))
+;;(def clerk-notebook
+;;  (future (clerk-runner/start-clerk)
+;;          (println "Starting clerk")))
 
+
+;;(defn -main [& args]
+;;  (jetty/run-jetty app {:port 8080 :join? false})
+;;  (clerk/serve! {:watch-paths ["notebooks" "src"] :browse false}))
+
+(defn -main [& args]
+  ;; Start Clerk in a separate thread
+  ;;(clerk-notebook)
+
+  ;; Start Jetty server
+  (jetty/run-jetty app {:port 8080 :join? false}))

@@ -6,7 +6,16 @@ WORKDIR /app
 
 # Install Clojure and tools
 RUN apt-get update && \
-    apt-get install -y curl && \
+    apt-get install -y \
+    iproute2 \
+    net-tools \
+    telnet \
+    lsof \
+    vim \
+    emacs \
+    htop \
+    netcat \
+    curl&& \
     curl -L -O https://github.com/clojure/brew-install/releases/latest/download/linux-install.sh && \
     chmod +x linux-install.sh && \
     ./linux-install.sh && \
@@ -34,8 +43,8 @@ RUN curl -s https://raw.githubusercontent.com/babashka/babashka/master/install >
     chmod +x /tmp/install-babashka.sh && \
     /tmp/install-babashka.sh
 
-# Expose the port Jetty will run on
-EXPOSE 8080
+# Expose ports: jetty:8080 clerk:7777
+EXPOSE 8080 7777
 
 # Ensure JAVA is running headlessly
 ENV JAVA_TOOL_OPTIONS="-Djava.awt.headless=true"
